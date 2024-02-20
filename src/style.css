@@ -1,0 +1,538 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap");
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
+:root {
+  --body-bg-color: linear-gradient(to right, #0c164d, #190b22);
+  --overlay-bg-color: linear-gradient(90deg, #0c164d 0%, #190b22 100%);
+  --mercury-color: #999999;
+  --venus-color: #e8cda2;
+  --earth-color: #b3caff;
+  --mars-color: #c07158;
+  --jupiter-color: #c9b5a4;
+  --saturn-color: #f0e2c4;
+  --uranus-color: #b8d8e1;
+  --neptune-color: #5e73bb;
+  --pluto-color: #c3b6aa;
+  --sun-color: #cc9f4c;
+}
+
+body {
+  font-family: "Roboto Condensed", sans-serif;
+  background-image: var(--body-bg-color);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* ******************************* Header - section ************/
+header {
+  width: 100%;
+  padding: 40px 20px;
+  display: flex;
+  justify-content: space-between;
+
+  & div {
+    & h1 {
+      font-family: Secular One;
+      font-size: 60px;
+      font-weight: 400;
+      line-height: 60px;
+      letter-spacing: 0.09em;
+      text-align: right;
+      color: #fff;
+    }
+
+    & p {
+      padding: 10px 0px;
+      font-family: Lora;
+      font-size: 24px;
+      font-weight: 400;
+      line-height: 24px;
+      letter-spacing: 0.6em;
+      text-align: right;
+      color: #ffd029;
+    }
+  }
+}
+
+.searchInput {
+  position: relative;
+  & input {
+    padding: 10px;
+    border: none;
+    background-color: transparent;
+    border-bottom: 2px solid #ffffff81;
+    color: #fff;
+    text-transform: capitalize;
+    width: 300px;
+  }
+  & .icon {
+    position: absolute;
+    top: 1px;
+    right: 0;
+    cursor: pointer;
+  }
+}
+
+.autocomplete-items {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #fff;
+  border-bottom: 1px solid #d4d4d4;
+}
+.autocomplete-items div:hover {
+  /*when hovering an item:*/
+  background-color: #e9e9e9;
+}
+.autocomplete-active {
+  /*when navigating through the items using the arrow keys:*/
+  background-color: DodgerBlue !important;
+  color: #ffffff;
+}
+
+/* ******************************* Toast-notification ************/
+.toast-notification {
+  position: fixed;
+  text-decoration: none;
+  z-index: 999999;
+  max-width: 300px;
+  background-color: #fff;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+  display: flex;
+  padding: 10px;
+  transform: translate(0, -150%);
+  text-align: center;
+}
+.toast-notification .toast-notification-wrapper {
+  flex: 1;
+  padding-right: 10px;
+  overflow: hidden;
+}
+.toast-notification .toast-notification-wrapper .toast-notification-header {
+  padding: 0 0 5px 0;
+  margin: 0;
+  font-weight: 500;
+  font-size: 14px;
+  word-break: break-all;
+  color: #4f525a;
+}
+.toast-notification .toast-notification-wrapper .toast-notification-content {
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
+  word-break: break-all;
+  color: #4f525a;
+}
+.toast-notification .toast-notification-close {
+  appearance: none;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 24px;
+  padding-bottom: 4px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.2);
+}
+.toast-notification .toast-notification-close:hover {
+  color: rgba(0, 0, 0, 0.4);
+}
+.toast-notification.toast-notification-top-center {
+  transform: translate(calc(50vw - 50%), -150%);
+}
+.toast-notification.toast-notification-bottom-left,
+.toast-notification.toast-notification-bottom-right {
+  transform: translate(0, 150%);
+}
+.toast-notification.toast-notification-bottom-center {
+  transform: translate(calc(50vw - 50%), 150%);
+}
+.toast-notification.toast-notification-dark {
+  background-color: #2d2e31;
+}
+.toast-notification.toast-notification-dark
+  .toast-notification-wrapper
+  .toast-notification-header {
+  color: #edeff3;
+}
+.toast-notification.toast-notification-dark
+  .toast-notification-wrapper
+  .toast-notification-content {
+  color: #edeff3;
+}
+.toast-notification.toast-notification-dark .toast-notification-close {
+  color: rgba(255, 255, 255, 0.2);
+}
+.toast-notification.toast-notification-dark .toast-notification-close:hover {
+  color: rgba(255, 255, 255, 0.4);
+}
+.toast-notification.toast-notification-success {
+  background-color: #c3f3d7;
+  border-left: 4px solid #51a775;
+}
+.toast-notification.toast-notification-success
+  .toast-notification-wrapper
+  .toast-notification-header {
+  color: #51a775;
+}
+.toast-notification.toast-notification-success
+  .toast-notification-wrapper
+  .toast-notification-content {
+  color: #51a775;
+}
+.toast-notification.toast-notification-success .toast-notification-close {
+  color: rgba(0, 0, 0, 0.2);
+}
+.toast-notification.toast-notification-success .toast-notification-close:hover {
+  color: rgba(0, 0, 0, 0.4);
+}
+.toast-notification.toast-notification-error {
+  background-color: #f3c3c3;
+  border-left: 4px solid #a75151;
+}
+.toast-notification.toast-notification-error
+  .toast-notification-wrapper
+  .toast-notification-header {
+  color: #a75151;
+}
+.toast-notification.toast-notification-error
+  .toast-notification-wrapper
+  .toast-notification-content {
+  color: #a75151;
+}
+.toast-notification.toast-notification-error .toast-notification-close {
+  color: rgba(0, 0, 0, 0.2);
+}
+.toast-notification.toast-notification-error .toast-notification-close:hover {
+  color: rgba(0, 0, 0, 0.4);
+}
+.toast-notification.toast-notification-verified {
+  background-color: #d0eaff;
+  border-left: 4px solid #6097b8;
+}
+.toast-notification.toast-notification-verified
+  .toast-notification-wrapper
+  .toast-notification-header {
+  color: #6097b8;
+}
+.toast-notification.toast-notification-verified
+  .toast-notification-wrapper
+  .toast-notification-content {
+  color: #6097b8;
+}
+.toast-notification.toast-notification-verified .toast-notification-close {
+  color: rgba(0, 0, 0, 0.2);
+}
+.toast-notification.toast-notification-verified
+  .toast-notification-close:hover {
+  color: rgba(0, 0, 0, 0.4);
+}
+.toast-notification.toast-notification-dimmed {
+  opacity: 0.3;
+}
+.toast-notification.toast-notification-dimmed:hover,
+.toast-notification.toast-notification-dimmed:active {
+  opacity: 1;
+}
+
+/* ******************************* Main -section / Planets ************/
+
+main {
+  display: grid;
+  grid-template-columns: 1fr;
+  padding: 0 40px;
+  max-height: 80dvh;
+  overflow-y: scroll;
+}
+
+.planets__wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-height: 600px;
+  padding: 20px;
+  overflow-y: scroll;
+}
+
+.planet__box {
+  padding: 10px;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  border-radius: 10px;
+  background-color: transparent;
+  max-width: 800px;
+  transition: all 0.3s linear;
+  border: 1px solid transparent;
+
+  & .planet-container:hover {
+    cursor: pointer;
+    width: 250px;
+    height: 250px;
+
+    &.planet-container + .desc {
+      backdrop-filter: blur(20px);
+      color: #fff;
+    }
+  }
+
+  & .desc {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s linear;
+    max-width: 450px;
+    height: 350px;
+    overflow: hidden;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: 1px;
+    color: transparent;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+  }
+}
+
+.planet-container,
+.overlay-planet-container {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  transition: all 0.3s linear;
+}
+
+.sun-wrapper {
+  position: absolute;
+  top: 40%;
+  right: 45%;
+  transform: translate(50%, 0%);
+  cursor: pointer;
+  z-index: 60;
+  &:hover {
+    & .planet-container {
+      background-color: #cc7b4c;
+    }
+    & p {
+      color: #fff;
+    }
+    & .Solen {
+      width: 350px;
+      height: 350px;
+    }
+  }
+
+  & p {
+    width: 400px;
+    position: absolute;
+    z-index: 50;
+    transition: all 0.3s linear;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: 1px;
+    backdrop-filter: blur(10px);
+    padding: 10px;
+    border-radius: 10px;
+    top: 50px;
+    left: 360px;
+    color: transparent;
+  }
+}
+
+.Solen {
+  background-color: var(--sun-color);
+  box-shadow: 0px 0px 10px 0px var(--sun-color),
+    0px 0px 1000px -2px var(--sun-color);
+}
+
+.Merkurius {
+  background-color: var(--mercury-color);
+  box-shadow: inset 10px 0px 12px -2px rgba(255, 255, 255, 0.2),
+    inset -70px 0px 50px 0px black, -5px 0px 10px -4px var(--mercury-color);
+}
+
+.Venus {
+  background-color: var(--venus-color);
+
+  box-shadow: inset 10px 0px 12px -2px rgba(255, 255, 255, 0.2),
+    inset -70px 0px 50px 0px black, -5px 0px 10px -4px var(--venus-color);
+}
+
+.Jorden {
+  background-color: var(--earth-color);
+  box-shadow: inset 10px 0px 12px -2px rgba(255, 255, 255, 0.2),
+    inset -70px 0px 50px 0px black, -5px 0px 10px -4px var(--earth-color);
+}
+
+.Mars {
+  background-color: var(--mars-color);
+  box-shadow: inset 10px 0px 12px -2px rgba(255, 255, 255, 0.2),
+    inset -70px 0px 50px 0px black, -5px 0px 10px -4px var(--mars-color);
+}
+
+.Jupiter {
+  background-color: var(--jupiter-color);
+
+  box-shadow: inset 10px 0px 12px -2px rgba(255, 255, 255, 0.2),
+    inset -70px 0px 50px 0px black, -5px 0px 10px -4px var(--jupiter-color);
+}
+
+.Saturnus {
+  background-color: var(--saturn-color);
+  box-shadow: inset 10px 0px 12px -2px rgba(255, 255, 255, 0.2),
+    inset -70px 0px 50px 0px black, -5px 0px 10px -4px var(--saturn-color);
+}
+
+.Uranus {
+  background-color: var(--uranus-color);
+  box-shadow: inset 10px 0px 12px -2px rgba(255, 255, 255, 0.2),
+    inset -70px 0px 50px 0px black, -5px 0px 10px -4px var(--uranus-color);
+}
+
+.Neptunus {
+  background-color: var(--neptune-color);
+
+  box-shadow: inset 10px 0px 12px -2px rgba(255, 255, 255, 0.2),
+    inset -70px 0px 50px 0px black, -5px 0px 10px -4px var(--neptune-color);
+}
+
+.Pluto {
+  background-color: var(--pluto-color);
+  box-shadow: inset 10px 0px 12px -2px rgba(255, 255, 255, 0.2),
+    inset -70px 0px 50px 0px black, -5px 0px 10px -4px var(--pluto-color);
+}
+
+/* ******************************* Overlay/side-page ************/
+
+#overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-height: 110vh;
+  width: 100%;
+  z-index: 600;
+  background-image: var(--overlay-bg-color);
+  transition: all 0.3s linear;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateX(110%);
+
+  & .overlay-planet-container {
+    align-self: center;
+  }
+}
+
+.close__btn__box {
+  position: absolute;
+  top: 10%;
+  left: 5%;
+  cursor: pointer;
+}
+
+#overlay div:first-child {
+  display: flex;
+  gap: 50px;
+}
+
+.overlay__content {
+  max-width: 800px;
+}
+
+.overlay__content__h1 {
+  font-family: Secular One;
+  font-size: 60px;
+  font-weight: 400;
+  line-height: 60px;
+  letter-spacing: 0.09em;
+  color: #fff;
+  padding: 5px 0px;
+}
+
+.overlay__content__h2 {
+  font-family: Lora;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.6em;
+  color: #ffd029;
+  padding: 10px 0px;
+}
+
+.overlay__content__p {
+  font-family: Roboto Condensed;
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 31px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #fff;
+}
+
+.overlay__planet__info--box {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1.5px solid #fff;
+  border-radius: 10px;
+}
+
+.box {
+  display: flex;
+  padding: 20px 10px;
+  align-items: center;
+  gap: 10px;
+
+  & h3 {
+    font-family: Secular One;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 18px;
+    letter-spacing: 0.09em;
+    color: #fff;
+  }
+
+  & p {
+    font-family: Roboto Condensed;
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 31px;
+    letter-spacing: 0.16em;
+    color: #fff;
+  }
+}
+
+/* ******************************* This is for the slide animation of the page ************/
+.slide {
+  transform: translateX(0) !important;
+}
