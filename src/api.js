@@ -57,13 +57,13 @@ export const fetchPlanets = async () => {
       {
         id: 9,
         circumference: 7445,
-        desc: "Pluto it's about 3.6 billion miles away from the Sun, and it has a thin atmosphere composed mostly of nitrogen, methane, and carbon monoxide. On average, Pluto's temperature is -387°F (-232°C), making it too cold to sustain life. Pluto is orbited by five known moons, the largest of which is Charon.",
+        desc: "Pluto ligger cirka 3,6 miljarder miles från solen, och den har en tunn atmosfär som mestadels består av kväve, metan och kolmonoxid. I genomsnitt är Plutos temperatur -387°F (-232°C), vilket gör det för kallt för att upprätthålla liv. Pluto kretsar kring fem kända månar, varav den största är Charon.",
         distance: 3600000000,
         latinName: "Plūtō",
         moons: ["Charon", "Nix", "Hydra", "Kerberos", "Styx"],
         name: "Pluto",
         temp: { day: -147, night: -233 },
-        type: "Dwarf planet",
+        type: "Dvärgplanet",
         rotation: "",
       },
     ];
