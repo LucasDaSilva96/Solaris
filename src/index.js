@@ -3,6 +3,18 @@ import "./style.css";
 import { applyOverlayContent, toggleOverlay } from "./overlay";
 import { planetEventListener, renderPlanets } from "./renderplanets";
 import { autocomplete, checkPlanetName } from "./search";
+import { Toasts } from "./toast";
+
+const toasts = new Toasts({
+  offsetX: 20, // 20px
+  offsetY: 20, // 20px
+  gap: 20, // The gap size in pixels between toasts
+  width: 300, // 300px
+  timing: "ease", // See list of available CSS transition timings
+  duration: ".5s", // Transition duration
+  dimOld: true, // Dim old notifications while the newest notification stays highlighted
+  position: "top-center", // top-left | top-center | top-right | bottom-left | bottom-center | bottom-right
+});
 
 // DOM - selections
 const input = document.querySelector("input");
@@ -29,6 +41,14 @@ autocomplete(input);
 search__btn.addEventListener("click", async () => {
   const hasPlanet = await checkPlanetName(input.value);
 
+  if (!hasPlanet.hasPlanet) {
+    toasts.push({
+      title: "No planet found",
+      content: "Please enter a valid planet name",
+      style: "error",
+      dismissAfter: "3s", // s = seconds
+    });
+  }
   if (hasPlanet.hasPlanet) {
     applyOverlayContent(hasPlanet.planetFound);
     input.textContent = "";
